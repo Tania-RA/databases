@@ -1,9 +1,9 @@
-var mysql      = require('mysql');
+var mysql      = require('mysql2');
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'foouser',
-  password : 'foopassword',
-  database : 'foodb'
+  user     : 'root',
+  password : 'TaniRA143',
+  database : 'new_schema'
 });
 
 connection.connect();
