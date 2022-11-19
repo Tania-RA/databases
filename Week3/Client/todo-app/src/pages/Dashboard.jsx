@@ -37,6 +37,15 @@ const Dashboard = () => {
   useEffect(() => {
     (async () => (await getData()))();
   }, []);
+
+  const handleClick = async(e) => {
+    const id = (e.target.value);
+    
+    await axios.post(`http://localhost:4000/api/category/delete/${id}`).then((res) => { 
+      console.log(res.data);
+    })
+
+  }
   
   return (
     <div>
@@ -45,12 +54,12 @@ const Dashboard = () => {
       <button onClick={addTodo}>Add Category</button>
       {categories.map((cat, index) => {
         return (
-          <Link to={`/${cat.category_id}`} key={index}>
-            <div >
+          <div key={index}>
+            <Link to={`/${cat.category_id}`} >
               <h1>{cat.category_name}</h1>
-              <button>Delete</button>
-            </div>
-          </Link>
+            </Link>
+            <button value={cat.category_id} onClick={handleClick}>Delete</button>
+          </div>
           
         )
       })}

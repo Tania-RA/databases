@@ -40,7 +40,16 @@ const Items = () => {
 
   useEffect(() => {
     (async () => (await getData()))();
-  }, []);
+  });
+
+  const handleClick = async(e) => {
+    const id = (e.target.value);
+    
+    await axios.post(`http://localhost:4000/api/category/delete/${id}`).then((res) => { 
+      console.log(res.data);
+    })
+
+  }
   
   return (
     <div>
@@ -65,12 +74,13 @@ const Items = () => {
       <hr />
       <h1>Items in List</h1>
       <hr />
-      {items.map((item, key) => {
+      {items.map((item, index) => {
         return (
-          <div>
+          <div key={index}>
             <h2>{item.item_name}</h2>
             <p>{item.tagged}</p>
             <p>{item.reminder}</p>
+            <button value={item.item_id} onClick={handleClick}>Delete Todo</button>
           </div>
         )
       })}

@@ -26,4 +26,12 @@ router.get('/items/:catId', async (req, res) => {
   })
 })
 
+router.post('/delete/:id', async (req, res) => { 
+  const id = req.params.id;
+  connection.query(`DELETE FROM item WHERE item_id=?`, [id], (err, data) => {
+    if(err) return res.status(500).json(err);
+    return res.status(200).json("Deleted Successfully!");
+  })
+})
+
 module.exports= router;
