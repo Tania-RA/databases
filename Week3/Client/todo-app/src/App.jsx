@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import Items from "./pages/Items";
+import Alert from "./pages/Alert";
 
 
 const Layout = () => {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path: "/:catId",
     element: <Items />,
+  },
+  {
+    path: "/alert/:id",
+    element: < Alert/>,
   }
 ]);
 

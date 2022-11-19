@@ -7,6 +7,8 @@ const Dashboard = () => {
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
+  const [isAlert, setIsAlert] = useState(false);
+  const [alert, setAlert] = useState([]);
   const navigate = useNavigate();
   const id= localStorage.getItem("uid");
   const handleChange = (e) => {
@@ -34,9 +36,23 @@ const Dashboard = () => {
     })
   }
 
+  const getAlerts = async () => { 
+    await axios.get(`http://localhost:4000/api/category/alert`).then((res) => {
+      console.log(res.data);
+      if (res.data.length > 0) {
+
+        setIsAlert(true);
+        setAlert(res.data);
+      }
+    })
+  }
+
   useEffect(() => {
     (async () => (await getData()))();
+    (async () => (await getAlerts()))();
   }, []);
+
+  
 
   const handleClick = async(e) => {
     const id = (e.target.value);
@@ -59,10 +75,25 @@ const Dashboard = () => {
               <h1>{cat.category_name}</h1>
             </Link>
             <button value={cat.category_id} onClick={handleClick}>Delete</button>
+            {isAlert && (
+              
+              <div>
+                {alert.map((a, index) => {
+                  if (a.category_id === cat.category_id) {
+                    return (
+                      <Link to={`/alert/${cat.category_id}`}>Alert</Link>
+                    )
+                  }
+                  return null;
+                })}
+                
+              </div>
+            )}
           </div>
           
         )
       })}
+      
     </div>
   )
 }

@@ -43,7 +43,10 @@ router.post('/delete/:id', async (req, res) => {
 })
 
 router.get('/alert', async (req, res) => { 
-  
+  connection.query("SELECT c.category_id,i.item_name, DATEDIFF(i.reminder,i.current_date ) AS days FROM ToDo.item i inner join ToDo.category c ON i.category_id=c.category_id WHERE DATEDIFF(i.reminder,i.current_date )<10;", (err, data)=> {
+    if(err) return res.status(500).json(err);
+    return res.status(200).json(data);
+  })
 });
 
 module.exports=router;
